@@ -27,3 +27,16 @@ ingress-nginx - installation guide (https://kubernetes.github.io/ingress-nginx/d
 ## Kubernetes Dashboard
 
 http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
+
+## Deployment - additional links
+
+https://helm.sh/docs/intro/install/#from-script
+https://kubernetes.github.io/ingress-nginx/deploy/#using-helm
+
+## Few notes on accounts/roles
+
+- User Accounts - Identifies a 'person' administering our cluster
+- Service Accounts - Identifies a 'pod' aministering our cluster
+
+- ClusterRoleBinding - Authorizes an account to do a certain set of actions across the entire cluster
+- RoleBinding - Authorizes an account to do a ceratin set of actions in a _single namespace_

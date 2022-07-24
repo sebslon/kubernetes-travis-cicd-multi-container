@@ -1,9 +1,30 @@
 sudo: required
 services:
   - docker
+env:
+  global:
+    - SHA=$(git rev-parse HEAD) # SHA variable for k8s deployments
+    - CLOUDSDK_CORE_DISABLE_PROMPTS=1 # disable prompts e.g are you sure (y/n)
 before_install:
+  # INITIAL SETUP: INSTALL GCP SDK / CONFIGURE AUTH
   - openssl aes-256-cbc -K $encrypted_9f3b5599b056_key -iv $encrypted_9f3b5599b056_iv -in service-account.json.enc -out service-account.json -d # decrypt service account
   - curl https://sdk.cloud.google.com | bash > /ev/null;
   - source $HOME/google-cloud-sdk/path.bash.inc
   - gcloud components update kubectl
   - gcloud auth activate-service-account --key-file service-account.json
+  - gcloud config set project multi-k8s-357218
+  - gcloud config set compute/zone us-east1-b
+  - gcloud container clusters get-credentials multi-cluster
+  # LOGIN WITH DOCKER CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker build -t sebastiansloniec/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true sebastiansloniec/react-test npm test # RUN TESTS
+
+## DEPLOYMENT
+deploy:
+  provider: script
+  script: bash ./deploy.sh
+  on:
+    branch: master
