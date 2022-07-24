@@ -69,3 +69,28 @@ AccessModes:
   - Kubernetes volume - An **object** that allows a container to store data at the pod level (if the pod dies - data is lost, will survive container restarts)
     - Persistent Volume - Not tied to pod/container, persistent.
     - Persistent Volume Claim - dynamically/statically provisioned volume.
+
+### SSL
+
+Add the Jetstack Helm repository
+
+`helm repo add jetstack https://charts.jetstack.io`
+
+Update your local Helm chart repository cache:
+
+`helm repo update`
+
+Install the cert-manager Helm chart:
+
+```
+helm install \
+ cert-manager jetstack/cert-manager \
+ --namespace cert-manager \
+ --create-namespace \
+ --version v1.8.0 \
+ --set installCRDs=true
+```
+
+=> issuer.yml - Object telling cert manager where to get certificate from
+=> certificate.yml - Object describing details about the certificate that should be obtainde
+==> Cert manager - created by helm, sets up infra to respond to HTTP challenge, gets certificate & stores it in a secret
