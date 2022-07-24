@@ -40,3 +40,8 @@ https://kubernetes.github.io/ingress-nginx/deploy/#using-helm
 
 - ClusterRoleBinding - Authorizes an account to do a certain set of actions across the entire cluster
 - RoleBinding - Authorizes an account to do a ceratin set of actions in a _single namespace_
+
+## Local Development (Skaffold)
+
+- Install Skaffold in the Cluster
+- Apply a config file
