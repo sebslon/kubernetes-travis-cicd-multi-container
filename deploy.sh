@@ -12,11 +12,11 @@ docker push sebastiansloniec/multi-client:latest
 docker push sebastiansloniec/multi-server:latest
 docker push sebastiansloniec/multi-worker:latest
 
-docker push sebastiansloniec/multi-client:latest:$SHA
-docker push sebastiansloniec/multi-server:latest:$SHA
-docker push sebastiansloniec/multi-worker:latest:$SHA
+docker push sebastiansloniec/multi-client:$SHA
+docker push sebastiansloniec/multi-server:$SHA
+docker push sebastiansloniec/multi-worker:$SHA
 
-kubectl apply -f k8
+kubectl apply -f k8s
 
 kubectl set image deployments/client-deployment client=sebastiansloniec/multi-client:$SHA
 kubectl set image deployments/server-deployment server=sebastiansloniec/multi-server:$SHA
